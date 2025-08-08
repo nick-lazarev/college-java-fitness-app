@@ -1,83 +1,93 @@
 package Exercise;
 
 public class Authorization {
-	private boolean isAuth = false;
+    private boolean isAuth = false;
 
-	private String email;
-	private String password;
-	private String name;
-	private int age;
-	private int height;
-	private int weight;
+    private String email;
+    private String password;
+    private String name;
+    private int age;
+    private int height;  
+    private int weight; 
 
-	boolean getAuthStatus() {
-		return this.isAuth;
-	}
-	
-	private void setDefaultAuthProps() {
-		this.email = "" ;
-		this.password = "" ;
-		this.name = "";
-		this.age = 0;
-		this.height = 0;
-		this.weight = 0;
-	}
-	
-	void setEmail(String email) {
-		if (!this.isAuth) return;
+    boolean getAuthStatus() {
+        return this.isAuth;
+    }
 
-		this.email = email;
-	}
-	
-	void setPassword(String password) {
-		if (!this.isAuth) return;
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-		this.password = password;
-	}
-	
-	void setName(String name) {
-		if (!this.isAuth) return;
+    public String getEmail() {
+        return this.email;
+    }
 
-		this.name = name;
-	}
-	
-	void setAge(int age) {
-		if (!this.isAuth) return;
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-		this.age = age;
-	}
-	
-	void setHeight(int height) {
-		if (!this.isAuth) return;
+    public String getPassword() {
+        return this.password;
+    }
 
-		this.height = height;
-	}
-	
-	void setWeight(int weight) {
-		if (!this.isAuth) return;
+    public void setName(String name) {
+        this.name = name;
+    }
 
-		this.weight = weight;
-	}
-	
-	void login() {
-		//TODO: add login logic
-		this.isAuth = true;
-		
-		this.setDefaultAuthProps();
-    App.updateCurrentUser(email, this.name, this.age, this.height, this.weight);
+    public String getName() {
+        return this.name;
+    }
 
-	}
+    public void setAge(int age) {
+        this.age = age;
+    }
 
-	void register() {
-		System.out.println("Registration was successfully completed!");
-		System.out.println("");
-		
-		this.setDefaultAuthProps();
-		App.updateCurrentUser(email, name, age, height, weight); 
-	}
+    public int getAge() {
+        return this.age;
+    }
 
-	void logout() {
-		//TODO: add logout logic
-		this.isAuth = false;
-	}
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public double getHeight() {
+        return this.height;
+    }
+
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public double getWeight() {
+        return this.weight;
+    }
+
+    private boolean isValidLogin(String email, String password) {
+        if (App.authManager.getEmail().equals(email) && App.authManager.getPassword().equals(password)) {
+            return true;  
+        }
+        return false; 
+    }
+
+    public void login() {
+        this.isAuth = this.isValidLogin(this.email, this.password); 
+        if (this.isAuth) {
+            System.out.println("Login successful!");
+        } else {
+            System.out.println("Invalid credentials.");
+        }
+    }
+
+ 
+    public void register() {
+        System.out.println("Registration was successfully completed!");
+        App.user.updateInfo(email, name, age, height, weight);
+    }
+
+
+    public void logout() {
+        this.isAuth = false;
+        App.user = null;  
+    }
 }

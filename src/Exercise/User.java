@@ -4,17 +4,16 @@ public class User {
     private String email;
     private String name;
     private int age;
-    private double height;
-    private double weight;
+    private int height;
+    private int weight;
 
-    public User(String email, String name, int age, double height, double weight) {
+    public void updateInfo(String email, String name, int age, int height, int weight) {
         this.email = email;
         this.name = name;
         this.age = age;
         this.height = height;
         this.weight = weight;
     }
-
 
     public String getEmail() {
         return this.email;
@@ -28,11 +27,11 @@ public class User {
         return this.age;
     }
 
-    public double getHeight() {
+    public int getHeight() {
         return this.height;
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return this.weight;
     }
 
@@ -44,11 +43,11 @@ public class User {
         this.age = newAge;
     }
 
-    public void setHeight(double newHeight) {
+    public void setHeight(int newHeight) {
         this.height = newHeight;
     }
 
-    public void setWeight(double newWeight) {
+    public void setWeight(int newWeight) {
         this.weight = newWeight;
     }
 }

@@ -2,55 +2,60 @@ package Exercise;
 import java.util.HashMap;
 
 class App {
-	static User currentUser;
-	static Authorization AuthManager = new Authorization();
-	private static Enum<?> location = AuthManager.getAuthStatus() == true ? AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN : NON_AUTH_LOCATIONS_ENUM.AUTH_SCREEN;
-	
-	static void goBack() {
-		
-	}
-	
-	static void redirect(Enum<?>value) {
-		App.location = value;
-		App.showScreen();
-	}
-	
-	static void exit() {
-	}
-	
-	static protected HashMap<NON_AUTH_LOCATIONS_ENUM, Screen> NON_AUTH_SCREENS = new HashMap<NON_AUTH_LOCATIONS_ENUM, Screen>() {
-		{
-			put(NON_AUTH_LOCATIONS_ENUM.AUTH_SCREEN, new AuthScreen());
-			put(NON_AUTH_LOCATIONS_ENUM.LOGIN_SCREEN, new LoginScreen());
-			put(NON_AUTH_LOCATIONS_ENUM.REGISTRATION_SCREEN, new RegistrationScreen());
-		}
-	};
+    static Authorization authManager = new Authorization();
 
-	static void updateCurrentUser(String email, String name, int age, int height, int weight) {
-      // 用用户的最新数据更新 currentUser
-			currentUser = new User(email, name, age, height, weight);
-			// 更新 MainMenuScreen 中的 currentUser
-			// 确保这里总是更新 currentUser
-			AUTH_SCREENS.put(AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN, new MainMenuScreen(currentUser));
-	}
-	
-	static protected HashMap<AUTH_LOCATIONS_ENUM, Screen> AUTH_SCREENS = new HashMap<AUTH_LOCATIONS_ENUM, Screen>() {
-			{
-					// 在這裡傳遞 currentUser 物件
-					put(AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN, new MainMenuScreen(currentUser));  // 這裡傳遞 currentUser 物件
-			}
-	};
+    private static Enum<?> location = authManager.getAuthStatus()
+            ? AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN
+            : NON_AUTH_LOCATIONS_ENUM.AUTH_SCREEN;
 
-	static void showScreen() {
-		Screen CurrentScreen;
+    static User user = new User();
 
-		//TODO: add error handler
-		if (App.AuthManager.getAuthStatus()) {
-			CurrentScreen = AUTH_SCREENS.get(App.location);
-		} else {
-			CurrentScreen = NON_AUTH_SCREENS.get(App.location);
-		}
-		
-		CurrentScreen.show();
-	}
+    static void goBack() {
+    }
+
+    static void redirect(AUTH_LOCATIONS_ENUM value) {
+        App.location = value;
+        App.showScreen();
+    }
+    
+    static void redirect(NON_AUTH_LOCATIONS_ENUM value) {
+        App.location = value;
+        App.showScreen();
+    }
+
+    static void exit() {
+        System.out.println("Exiting...");
+        System.exit(0);
+    }
+
+    static protected HashMap<NON_AUTH_LOCATIONS_ENUM, Screen> NON_AUTH_SCREENS =
+            new HashMap<NON_AUTH_LOCATIONS_ENUM, Screen>() {{
+                put(NON_AUTH_LOCATIONS_ENUM.AUTH_SCREEN, new AuthScreen());
+                put(NON_AUTH_LOCATIONS_ENUM.LOGIN_SCREEN, new LoginScreen());
+                put(NON_AUTH_LOCATIONS_ENUM.REGISTRATION_SCREEN, new RegistrationScreen());
+            }};
+
+    static protected HashMap<AUTH_LOCATIONS_ENUM, Screen> AUTH_SCREENS =
+            new HashMap<AUTH_LOCATIONS_ENUM, Screen>() {{
+                put(AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN, new MainMenuScreen());
+                put(AUTH_LOCATIONS_ENUM.USER_SCREEN, new UserScreen()); 
+            }};
+
+    static void showScreen() {
+        Screen currentScreen;
+
+        if (App.authManager.getAuthStatus()) {
+            if (!(App.location instanceof AUTH_LOCATIONS_ENUM)) {
+                App.location = AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN;
+            }
+            currentScreen = AUTH_SCREENS.get((AUTH_LOCATIONS_ENUM) App.location);
+        } else {
+            if (!(App.location instanceof NON_AUTH_LOCATIONS_ENUM)) {
+                App.location = NON_AUTH_LOCATIONS_ENUM.AUTH_SCREEN;
+            }
+            currentScreen = NON_AUTH_SCREENS.get((NON_AUTH_LOCATIONS_ENUM) App.location);
+        }
+
+        currentScreen.show();
+    }
 }

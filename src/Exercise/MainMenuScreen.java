@@ -1,76 +1,61 @@
 package Exercise;
-import java.util.Scanner;
 
 public class MainMenuScreen extends Screen {
+    public void showUserInfo() {
+        System.out.println("User Info:");
+        System.out.println("Email: " + App.user.getEmail());
+        System.out.println("Name: " + App.user.getName());
+        System.out.println("Age: " + App.user.getAge());
+        System.out.println("Height: " + App.user.getHeight());
+        System.out.println("Weight: " + App.user.getWeight());
+    }
 
-	private String location;
-	private User currentUser;
+    @Override
+    public void show() {
+        System.out.println("Main Menu:");
+        System.out.println("1. Show User Info");
+        System.out.println("2. Log Workout");
+        System.out.println("3. View Workouts");
+        System.out.println("4. View Calories");
+        System.out.println("5. Exit");
 
-	MainMenuScreen(User user) {
-			this.currentUser = user;
-			this.location = "Main Menu"; 
-	}
+        String line = sc.nextLine();
+        int choice;
+        try {
+            choice = Integer.parseInt(line.trim());
+        } catch (NumberFormatException e) {
+            choice = -1;
+        }
+        handleChoice(choice);
+    }
 
-	public void showUserInfo() {
-			System.out.println("User Info:");
-			System.out.println("Name: " + currentUser.getName());
-			System.out.println("Email: " + currentUser.getEmail());
-			System.out.println("Age: " + currentUser.getAge());
-			System.out.println("Height: " + currentUser.getHeight());
-			System.out.println("Weight: " + currentUser.getWeight());
-	}
-
-	public void logWorkout() {
-			System.out.println("Logging workout...");
-
-	}
-
-	public void viewWorkouts() {
-			System.out.println("Viewing workouts...");
-	
-	}
-
-	public void viewCalories() {
-			System.out.println("Viewing total calories burned...");
-
-	}
-
-	@Override
-	public void show() {
-			System.out.println("Main Menu");
-			System.out.println("1. Show User Info");
-			System.out.println("2. Log Workout");
-			System.out.println("3. View Workouts");
-			System.out.println("4. View Calories");
-			System.out.println("5. Exit");
-			
-			Scanner sc = new Scanner(System.in);
-			int choice = sc.nextInt();
-			handleChoice(choice);
-	}
-
-	private void handleChoice(int choice) {
-			switch (choice) {
-					case 1:
-							showUserInfo();
-							break;
-					case 2:
-							logWorkout();
-							break;
-					case 3:
-							viewWorkouts();
-							break;
-					case 4:
-							viewCalories();
-							break;
-					case 5:
-							System.out.println("Exiting...");
-							System.exit(0);
-							break;
-					default:
-							System.out.println("Invalid choice, please try again.");
-							show(); 
-							break;
-			}
-	}
+    private void handleChoice(int choice) {
+        switch (choice) {
+            case 1:
+                App.redirect(AUTH_LOCATIONS_ENUM.USER_SCREEN);
+                break;
+            case 2:
+                // log workout
+                System.out.println("(TODO) Log Workout");
+                show();
+                break;
+            case 3:
+                // view workouts
+                System.out.println("(TODO) View Workouts");
+                show();
+                break;
+            case 4:
+                // view calories
+                System.out.println("(TODO) View Calories");
+                show();
+                break;
+            case 5:
+                App.exit();
+                break;
+            default:
+                System.out.println("Invalid choice, please try again.");
+                show();
+                break;
+        }
+    }
 }
