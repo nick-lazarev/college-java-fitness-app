@@ -8,7 +8,7 @@ public class Authorization {
 	private String name;
 	private int age;
 	private int height;
-	private int weigth;
+	private int weight;
 
 	boolean getAuthStatus() {
 		return this.isAuth;
@@ -20,7 +20,7 @@ public class Authorization {
 		this.name = "";
 		this.age = 0;
 		this.height = 0;
-		this.weigth = 0;
+		this.weight = 0;
 	}
 	
 	void setEmail(String email) {
@@ -53,10 +53,10 @@ public class Authorization {
 		this.height = height;
 	}
 	
-	void setWeigth(int weigth) {
+	void setWeight(int weight) {
 		if (!this.isAuth) return;
 
-		this.weigth = weigth;
+		this.weight = weight;
 	}
 	
 	void login() {
@@ -64,6 +64,8 @@ public class Authorization {
 		this.isAuth = true;
 		
 		this.setDefaultAuthProps();
+    App.updateCurrentUser(email, this.name, this.age, this.height, this.weight);
+
 	}
 
 	void register() {
@@ -71,6 +73,7 @@ public class Authorization {
 		System.out.println("");
 		
 		this.setDefaultAuthProps();
+		App.updateCurrentUser(email, name, age, height, weight); 
 	}
 
 	void logout() {

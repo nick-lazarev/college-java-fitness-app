@@ -1,8 +1,8 @@
-//Nikita Lazarev, ITS, N01690103
 package Exercise;
 import java.util.HashMap;
 
 class App {
+	static User currentUser;
 	static Authorization AuthManager = new Authorization();
 	private static Enum<?> location = AuthManager.getAuthStatus() == true ? AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN : NON_AUTH_LOCATIONS_ENUM.AUTH_SCREEN;
 	
@@ -25,11 +25,20 @@ class App {
 			put(NON_AUTH_LOCATIONS_ENUM.REGISTRATION_SCREEN, new RegistrationScreen());
 		}
 	};
+
+	static void updateCurrentUser(String email, String name, int age, int height, int weight) {
+      // 用用户的最新数据更新 currentUser
+			currentUser = new User(email, name, age, height, weight);
+			// 更新 MainMenuScreen 中的 currentUser
+			// 确保这里总是更新 currentUser
+			AUTH_SCREENS.put(AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN, new MainMenuScreen(currentUser));
+	}
 	
 	static protected HashMap<AUTH_LOCATIONS_ENUM, Screen> AUTH_SCREENS = new HashMap<AUTH_LOCATIONS_ENUM, Screen>() {
-		{
-			put(AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN, new MainMenuScreen());
-		}
+			{
+					// 在這裡傳遞 currentUser 物件
+					put(AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN, new MainMenuScreen(currentUser));  // 這裡傳遞 currentUser 物件
+			}
 	};
 
 	static void showScreen() {

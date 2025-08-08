@@ -66,7 +66,7 @@ public class RegistrationScreen extends Screen {
 
 	private void enterHeight() {
 		try {
-			System.out.print("Enter age: ");
+			System.out.print("Enter height: ");
 			
 			if (!this.sc.hasNextInt()) {
 				throw new RuntimeException("Error! Please enter a positive number");
@@ -91,7 +91,7 @@ public class RegistrationScreen extends Screen {
 			}
 			int value = this.sc.nextInt();
 			System.out.println();
-			App.AuthManager.setWeigth(value);	
+			App.AuthManager.setWeight(value);	
 		} catch (Exception e) {
 			sc.nextLine();
 			System.out.println(e.getMessage());
