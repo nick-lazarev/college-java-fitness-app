@@ -3,14 +3,6 @@ package Exercise;
 public class UserScreen extends Screen {  
     @Override
     public void show() {
-        if (App.user == null) {
-            System.out.println("App.user Info Screen: (no App.user)");
-            System.out.println("Press Enter to go back...");
-            sc.nextLine();
-            App.redirect(AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN);
-            return;
-        }
-
         System.out.println("App.user Info Screen:");
         System.out.println("Email: " + App.user.getEmail());
         System.out.println("Name: " + App.user.getName());

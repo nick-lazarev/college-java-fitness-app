@@ -3,12 +3,15 @@ import java.util.HashMap;
 
 class App {
     static Authorization authManager = new Authorization();
+    static User user = new User();
 
     private static Enum<?> location = authManager.getAuthStatus()
             ? AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN
             : NON_AUTH_LOCATIONS_ENUM.AUTH_SCREEN;
 
-    static User user = new User();
+    static void setDefaultUser() {
+        App.user = new User();
+    }
 
     static void goBack() {
     }

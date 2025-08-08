@@ -14,6 +14,15 @@ public class Authorization {
         return this.isAuth;
     }
 
+	private void setDefaultAuthProps() {
+		this.email = "" ;
+		this.password = "" ;
+		this.name = "";
+		this.age = 0;
+		this.height = 0;
+		this.weight = 0;
+	}
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -26,24 +35,12 @@ public class Authorization {
         this.password = password;
     }
 
-    public String getPassword() {
-        return this.password;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public int getAge() {
-        return this.age;
     }
 
     public void setHeight(int height) {
@@ -63,31 +60,27 @@ public class Authorization {
         return this.weight;
     }
 
-    private boolean isValidLogin(String email, String password) {
-        if (App.authManager.getEmail().equals(email) && App.authManager.getPassword().equals(password)) {
-            return true;  
-        }
-        return false; 
-    }
-
     public void login() {
-        this.isAuth = this.isValidLogin(this.email, this.password); 
-        if (this.isAuth) {
-            System.out.println("Login successful!");
-        } else {
-            System.out.println("Invalid credentials.");
-        }
+        this.isAuth = true;
     }
 
  
     public void register() {
         System.out.println("Registration was successfully completed!");
-        App.user.updateInfo(email, name, age, height, weight);
+        App.user.updateInfo(
+            this.email,
+            this.name,
+            this.age,
+            this.height,
+            this.weight
+        );
+        this.setDefaultAuthProps();
     }
 
 
     public void logout() {
         this.isAuth = false;
-        App.user = null;  
+        this.setDefaultAuthProps();
+        App.setDefaultUser();
     }
 }

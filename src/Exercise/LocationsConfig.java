@@ -19,7 +19,7 @@ enum NON_AUTH_LOCATIONS_ENUM {
 
 enum AUTH_LOCATIONS_ENUM {
     MAIN_MENU_SCREEN("mainMenu"),
-    USER_SCREEN("userScreen"); 
+    USER_SCREEN("mainMenu/userScreen"); 
 
     private final String value;
 
