@@ -4,13 +4,16 @@ import java.util.HashMap;
 class App {
     static Authorization authManager = new Authorization();
     static User user = new User();
+    static WorkoutManager workoutManager = new WorkoutManager();
 
     private static Enum<?> location = authManager.getAuthStatus()
             ? AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN
             : NON_AUTH_LOCATIONS_ENUM.AUTH_SCREEN;
 
-    static void setDefaultUser() {
+    static void setDefaultSettings() {
+        App.authManager = new Authorization();
         App.user = new User();
+        App.workoutManager = new WorkoutManager();
     }
 
     static void goBack() {
@@ -42,6 +45,7 @@ class App {
             new HashMap<AUTH_LOCATIONS_ENUM, Screen>() {{
                 put(AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN, new MainMenuScreen());
                 put(AUTH_LOCATIONS_ENUM.USER_SCREEN, new UserScreen()); 
+                put(AUTH_LOCATIONS_ENUM.TOTAL_CALORIES_SCREEN, new TotalCaloriesScreen()); 
             }};
 
     static void showScreen() {

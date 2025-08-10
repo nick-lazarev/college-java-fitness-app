@@ -14,9 +14,9 @@ public class MainMenuScreen extends Screen {
     public void show() {
         System.out.println("Main Menu:");
         System.out.println("1. Show User Info");
-        System.out.println("2. Log Workout");
-        System.out.println("3. View Workouts");
-        System.out.println("4. View Calories");
+        System.out.println("2. (TODO) Log Workout");
+        System.out.println("3. (TODO) Display Workouts");
+        System.out.println("4. Display Total Calories");
         System.out.println("5. Exit");
 
         String line = sc.nextLine();
@@ -33,29 +33,25 @@ public class MainMenuScreen extends Screen {
         switch (choice) {
             case 1:
                 App.redirect(AUTH_LOCATIONS_ENUM.USER_SCREEN);
-                break;
+                return;
             case 2:
                 // log workout
                 System.out.println("(TODO) Log Workout");
-                show();
                 break;
             case 3:
                 // view workouts
-                System.out.println("(TODO) View Workouts");
-                show();
+                System.out.println("(TODO) Display Workouts");
                 break;
             case 4:
-                // view calories
-                System.out.println("(TODO) View Calories");
-                show();
-                break;
+                App.redirect(AUTH_LOCATIONS_ENUM.TOTAL_CALORIES_SCREEN);
+                return;
             case 5:
                 App.exit();
-                break;
+                return;
             default:
                 System.out.println("Invalid choice, please try again.");
-                show();
                 break;
         }
+        this.show();
     }
 }
