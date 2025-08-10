@@ -44,7 +44,8 @@ class App {
     static protected HashMap<AUTH_LOCATIONS_ENUM, Screen> AUTH_SCREENS =
             new HashMap<AUTH_LOCATIONS_ENUM, Screen>() {{
                 put(AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN, new MainMenuScreen());
-                put(AUTH_LOCATIONS_ENUM.USER_SCREEN, new UserScreen()); 
+                put(AUTH_LOCATIONS_ENUM.USER_SCREEN, new UserScreen());
+                put(AUTH_LOCATIONS_ENUM.WORKOUT_LIST_SCREEN, new WorkoutListScreen());
                 put(AUTH_LOCATIONS_ENUM.TOTAL_CALORIES_SCREEN, new TotalCaloriesScreen()); 
             }};
 

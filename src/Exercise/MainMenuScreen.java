@@ -15,7 +15,7 @@ public class MainMenuScreen extends Screen {
         System.out.println("Main Menu:");
         System.out.println("1. Show User Info");
         System.out.println("2. (TODO) Log Workout");
-        System.out.println("3. (TODO) Display Workouts");
+        System.out.println("3. Display Workouts");
         System.out.println("4. Display Total Calories");
         System.out.println("5. Exit");
 
@@ -39,9 +39,8 @@ public class MainMenuScreen extends Screen {
                 System.out.println("(TODO) Log Workout");
                 break;
             case 3:
-                // view workouts
-                System.out.println("(TODO) Display Workouts");
-                break;
+                App.redirect(AUTH_LOCATIONS_ENUM.WORKOUT_LIST_SCREEN);
+                return;
             case 4:
                 App.redirect(AUTH_LOCATIONS_ENUM.TOTAL_CALORIES_SCREEN);
                 return;
