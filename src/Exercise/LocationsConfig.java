@@ -20,7 +20,8 @@ enum NON_AUTH_LOCATIONS_ENUM {
 enum AUTH_LOCATIONS_ENUM {
     MAIN_MENU_SCREEN("mainMenu"),
     USER_SCREEN("mainMenu/userScreen"),
-    TOTAL_CALORIES_SCREEN("mainMenu/totalCalories"); 
+    WORKOUT_LIST_SCREEN("mainMenu/workoutList"),
+    TOTAL_CALORIES_SCREEN("mainMenu/totalCalories");
 
     private final String value;
 
