@@ -1,0 +1,7 @@
+package Exercise;
+
+enum WORKOUT_TYPES_ENUM {
+	RUNNING,
+  SQUATS,
+  WEIGHTLIFTING;
+}
