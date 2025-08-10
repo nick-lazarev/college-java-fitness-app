@@ -80,7 +80,6 @@ public class Authorization {
 
     public void logout() {
         this.isAuth = false;
-        this.setDefaultAuthProps();
-        App.setDefaultUser();
+        App.setDefaultSettings();
     }
 }
