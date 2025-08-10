@@ -10,37 +10,22 @@ import java.util.Locale;
  * Model for a workout entry (UML: workoutType, distance, set, date).
  */
 public class Workout {
-
-    private String workoutType;   // e.g., RUNNING, SQUATS, WEIGHTLIFTING
+    private WORKOUT_TYPES_ENUM workoutType;   // e.g., RUNNING, SQUATS, WEIGHTLIFTING
     private double distance;      // km (used for RUNNING)
     private int set;              // sets (used for SQUATS/WEIGHTLIFTING)
     private Date date;            // java.util.Date
-
-    private static final SimpleDateFormat ISO = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-
-    public Workout() {
-        this.workoutType = "RUNNING";
-        this.distance = 0.0;
-        this.set = 0;
-        this.date = new Date();
-    }
-
-    public Workout(String type, double distanceKm, int sets, Date when) {
-        setWorkoutType(type);
-        setDistance(distanceKm);
-        setSets(sets);
-        setDate(when);
-    }
+    private SimpleDateFormat ISO = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
     // ---- Getters/Setters (UML names) ----
-    public String getWorkoutType() { return workoutType; }
-
-    public void setWorkoutType(String newType) {
-        if (newType == null || newType.isBlank()) throw new IllegalArgumentException("Type cannot be empty");
-        this.workoutType = newType.trim().toUpperCase(Locale.US);
+    public WORKOUT_TYPES_ENUM getWorkoutType() {
+        return this.workoutType;
     }
 
-    public double getDistance() { return distance; }
+    public void setWorkoutType(WORKOUT_TYPES_ENUM newType) {
+        this.workoutType = newType;
+    }
+
+    public double getDistance() { return this.distance; }
 
     public void setDistance(double newDistance) {
         if (newDistance < 0) throw new IllegalArgumentException("Distance cannot be negative");
@@ -71,12 +56,19 @@ public class Workout {
     }
 
     /** Used by WorkoutManager.getTotalCalories(...) */
-    double estimateCalories() {
+    double calcCalories() {
         switch (workoutType) {
-            case "RUNNING":        return distance * 60.0;
-            case "SQUATS":         return set * 30.0;
-            case "WEIGHTLIFTING":  return set * 40.0;
-            default:               return 0.0;
+            case WORKOUT_TYPES_ENUM.RUNNING:
+                return distance * 60.0;
+
+            case WORKOUT_TYPES_ENUM.SQUATS:
+                return set * 30.0;
+
+            case WORKOUT_TYPES_ENUM.WEIGHTLIFTING:
+                return set * 40.0;
+
+            default:
+                return 0.0;
         }
     }
 
@@ -84,10 +76,17 @@ public class Workout {
     public String toString() {
         String d = (date == null) ? "N/A" : ISO.format(date);
         switch (workoutType) {
-            case "RUNNING":        return "RUNNING | " + String.format(Locale.US, "%.2f km", distance) + " | " + d;
-            case "SQUATS":         return "SQUATS | " + set + " sets | " + d;
-            case "WEIGHTLIFTING":  return "WEIGHTLIFTING | " + set + " sets | " + d;
-            default:               return workoutType + " | " + d;
+            case WORKOUT_TYPES_ENUM.RUNNING:
+                return "RUNNING | " + String.format(Locale.US, "%.2f km", distance) + " | " + d;
+
+            case WORKOUT_TYPES_ENUM.SQUATS:
+                return "SQUATS | " + set + " sets | " + d;
+
+            case WORKOUT_TYPES_ENUM.WEIGHTLIFTING:
+                return "WEIGHTLIFTING | " + set + " sets | " + d;
+
+            default:
+                return workoutType + " | " + d;
         }
     }
 }

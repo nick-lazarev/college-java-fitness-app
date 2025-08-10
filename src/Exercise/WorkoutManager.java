@@ -1,7 +1,9 @@
 package Exercise;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Author: Asish Anisetti (ID: N01738397)
@@ -9,58 +11,46 @@ import java.util.Date;
  * Operations: addWorkout(), deleteWorkout(), editWorkout(), getTotalCalories(Date, Date)
  */
 public class WorkoutManager {
+    private List<Workout> workoutList = new ArrayList<Workout>();
 
-    private Workout[] workoutList = new Workout[8];
-    private int size = 0;
-
-    private void ensureCap(int need) {
-        if (need <= workoutList.length) return;
-        int newCap = Math.max(need, workoutList.length * 2);
-        workoutList = Arrays.copyOf(workoutList, newCap);
-    }
-
-    private boolean inRange(int idx) { return idx >= 0 && idx < size; }
+    private boolean inRange(int i) { return i >= 0 && i < workoutList.size(); }
 
     public void addWorkout(Workout w) {
         if (w == null) throw new IllegalArgumentException("Workout cannot be null");
-        ensureCap(size + 1);
-        workoutList[size++] = w;
+        this.workoutList.add(w);
     }
-
-
-    public boolean deleteWorkout() {
-        if (size == 0) return false;
-        workoutList[--size] = null;
-        return true;
-    }
-
  
-    public boolean deleteWorkout(int index) {
-        if (!inRange(index)) return false;
-        for (int i = index; i < size - 1; i++) workoutList[i] = workoutList[i + 1];
-        workoutList[--size] = null;
-        return true;
+    public void deleteWorkout(int i) {
+        if (!inRange(i)) return;
+        this.workoutList.remove(2);
     }
 
-    public boolean editWorkout(int index, Workout updated) {
-        if (updated == null || !inRange(index)) return false;
-        workoutList[index] = updated;
-        return true;
+    public void editWorkout(int i, Workout value) {
+        if (value == null || !inRange(i)) return;
+        this.workoutList.set(i, value);
     }
 
     public double getTotalCalories(Date minDate, Date maxDate) {
         double sum = 0.0;
-        for (int i = 0; i < size; i++) {
-            Workout w = workoutList[i];
+
+        for (Workout w : workoutList) {
             Date d = w.getDate();
             boolean afterMin  = (minDate == null) || !d.before(minDate);
             boolean beforeMax = (maxDate == null) || !d.after(maxDate);
-            if (afterMin && beforeMax) sum += w.estimateCalories();
-        }
+            if (afterMin && beforeMax) sum += w.calcCalories();
+        };
         return sum;
     }
 
-    // Helpers for UI/tests
-    public int count() { return size; }
-    public Workout[] toArray() { return Arrays.copyOf(workoutList, size); }
+    public List<Workout> getWorkoutList(Date minDate, Date maxDate) {
+        if (minDate != null && maxDate != null) {
+            List<Workout> result = this.workoutList.stream()
+                .filter(el -> !el.getDate().before(minDate) && !el.getDate().after(maxDate))
+                .collect(Collectors.toList());
+
+             return result;
+        }
+
+        return workoutList;
+    }
 }
