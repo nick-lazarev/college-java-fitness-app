@@ -8,4 +8,6 @@ public class AppContants {
 
 	public static final Pattern PASSWORD_REGEXP = 
 		    Pattern.compile(".{6,}", Pattern.CASE_INSENSITIVE);
+		
+	public static final String LOCATION_DELIMETER = "/"; 
 }

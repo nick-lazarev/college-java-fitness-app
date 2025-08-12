@@ -1,17 +1,13 @@
 package Exercise;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 
 public class WorkoutScreen extends Screen {
     private String option;
     private Date minDate = null;
     private Date maxDate = null;
-    private SimpleDateFormat ISO = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     
     protected void setDefaultSettings() {
         this.option = "";
@@ -19,11 +15,11 @@ public class WorkoutScreen extends Screen {
         this.maxDate = null;
     }
 
-	private final LinkedHashMap<String, TOTAL_CALORIES_SCREEN_OPTIONS_ENUM> OPTIONS_MAP = new LinkedHashMap<String, TOTAL_CALORIES_SCREEN_OPTIONS_ENUM>() {
+	private final LinkedHashMap<String, WORKOUT_SCREEN_OPTIONS_ENUM> OPTIONS_MAP = new LinkedHashMap<String, WORKOUT_SCREEN_OPTIONS_ENUM>() {
 		{
-			TOTAL_CALORIES_SCREEN_OPTIONS_ENUM[] menuItems = TOTAL_CALORIES_SCREEN_OPTIONS_ENUM.values();
+			WORKOUT_SCREEN_OPTIONS_ENUM[] menuItems = WORKOUT_SCREEN_OPTIONS_ENUM.values();
 			for (int i = 0; i < menuItems.length; i++) {
-				if (menuItems[i] == TOTAL_CALORIES_SCREEN_OPTIONS_ENUM.BACK) {
+				if (menuItems[i] == WORKOUT_SCREEN_OPTIONS_ENUM.BACK) {
 					put("0", menuItems[i]);
 					break;
 				}
@@ -35,7 +31,7 @@ public class WorkoutScreen extends Screen {
 	
 	protected void renderOptions() {
 		for (String key: this.OPTIONS_MAP.keySet()) {
-			if (this.OPTIONS_MAP.get(key) == TOTAL_CALORIES_SCREEN_OPTIONS_ENUM.BACK) {
+			if (this.OPTIONS_MAP.get(key) == WORKOUT_SCREEN_OPTIONS_ENUM.BACK) {
 				System.out.println("");
 			}
 			System.out.println(key + ". " + this.OPTIONS_MAP.get(key));
@@ -57,31 +53,14 @@ public class WorkoutScreen extends Screen {
 		}
 	}
 
-    private Date enterDate() {
-        Date date = null;
-        try {
-            String value = this.sc.nextLine();
-            date = ISO.parse(value);
-        } catch (ParseException e) {
-            System.out.println("Date must be yyyy-MM-dd");
-            date = this.enterDate();
-        }
-
-        return date;
-    }
-
     private void enterMinDate() {
-        System.out.println("");
-        System.out.print("Enter min date: ");
-        this.minDate = this.enterDate();
+        this.minDate = AppUtils.enterDate("Enter min date(yyyy-MM-dd): ");
     }
 
     private void enterMaxDate() {
         try {
             Date date = null;
-            System.out.println("");
-            System.out.print("Enter max date: ");
-            date = this.enterDate();
+            date = AppUtils.enterDate("Enter max date(yyyy-MM-dd): ");
 
             if (date.before(this.minDate)) {
 				throw new RuntimeException("Error! Max date should be later than min date");
@@ -95,18 +74,17 @@ public class WorkoutScreen extends Screen {
 
     }
 
-    private TOTAL_CALORIES_SCREEN_OPTIONS_ENUM getOptionValue() {
+    private WORKOUT_SCREEN_OPTIONS_ENUM getOptionValue() {
         return this.OPTIONS_MAP.get(this.option);
     }
 	
 	protected void handleOption() {
-		TOTAL_CALORIES_SCREEN_OPTIONS_ENUM optionValue = this.getOptionValue();
+		WORKOUT_SCREEN_OPTIONS_ENUM optionValue = this.getOptionValue();
 		
-		if (optionValue == TOTAL_CALORIES_SCREEN_OPTIONS_ENUM.BACK) {
-            //TODO: use app go back
-			App.redirect(AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN);
+		if (optionValue == WORKOUT_SCREEN_OPTIONS_ENUM.BACK) {
+            App.goBack();
             return;
-		} else if (optionValue == TOTAL_CALORIES_SCREEN_OPTIONS_ENUM.ENTER_DATES) {
+		} else if (optionValue == WORKOUT_SCREEN_OPTIONS_ENUM.ENTER_DATES) {
             this.enterMinDate();
             this.enterMaxDate();
 		}
@@ -115,9 +93,9 @@ public class WorkoutScreen extends Screen {
     protected void renderTotalCalories() {
         List<Workout> workoutList = App.workoutManager.getWorkoutList(this.minDate, this.maxDate);
         double totalCalories = App.workoutManager.getTotalCalories(this.minDate, this.maxDate);
-		TOTAL_CALORIES_SCREEN_OPTIONS_ENUM optionValue = this.getOptionValue();
+		WORKOUT_SCREEN_OPTIONS_ENUM optionValue = this.getOptionValue();
 
-        if (optionValue == TOTAL_CALORIES_SCREEN_OPTIONS_ENUM.ENTER_DATES) {
+        if (optionValue == WORKOUT_SCREEN_OPTIONS_ENUM.ENTER_DATES) {
             System.out.println("Min date: " + this.minDate);
             System.out.println("Max date: " + this.maxDate);
         } else {
@@ -130,9 +108,9 @@ public class WorkoutScreen extends Screen {
 
     protected void renderWorkoutList() {
         List<Workout> workoutList = App.workoutManager.getWorkoutList(this.minDate, this.maxDate);
-		TOTAL_CALORIES_SCREEN_OPTIONS_ENUM optionValue = this.getOptionValue();
+		WORKOUT_SCREEN_OPTIONS_ENUM optionValue = this.getOptionValue();
 
-        if (optionValue == TOTAL_CALORIES_SCREEN_OPTIONS_ENUM.ENTER_DATES) {
+        if (optionValue == WORKOUT_SCREEN_OPTIONS_ENUM.ENTER_DATES) {
             System.out.println("Min date: " + this.minDate);
             System.out.println("Max date: " + this.maxDate);
         } else {

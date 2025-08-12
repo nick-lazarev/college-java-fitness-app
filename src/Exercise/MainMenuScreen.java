@@ -1,20 +1,12 @@
 package Exercise;
 
 public class MainMenuScreen extends Screen {
-    public void showUserInfo() {
-        System.out.println("User Info:");
-        System.out.println("Email: " + App.user.getEmail());
-        System.out.println("Name: " + App.user.getName());
-        System.out.println("Age: " + App.user.getAge());
-        System.out.println("Height: " + App.user.getHeight());
-        System.out.println("Weight: " + App.user.getWeight());
-    }
-
     @Override
     public void show() {
+        System.out.println();
         System.out.println("Main Menu:");
         System.out.println("1. Show User Info");
-        System.out.println("2. (TODO) Log Workout");
+        System.out.println("2. Log Workout");
         System.out.println("3. Display Workouts");
         System.out.println("4. Display Total Calories");
         System.out.println("5. Exit");
@@ -35,9 +27,8 @@ public class MainMenuScreen extends Screen {
                 App.redirect(AUTH_LOCATIONS_ENUM.USER_SCREEN);
                 return;
             case 2:
-                // log workout
-                System.out.println("(TODO) Log Workout");
-                break;
+                App.redirect(AUTH_LOCATIONS_ENUM.LOG_WORKOUT_SCREEN);
+                return;
             case 3:
                 App.redirect(AUTH_LOCATIONS_ENUM.WORKOUT_LIST_SCREEN);
                 return;

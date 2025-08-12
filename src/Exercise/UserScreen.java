@@ -29,7 +29,7 @@ public class UserScreen extends Screen {
                 editUserInfo();
                 break;
             case 2:
-                goBack();
+                App.goBack();
                 break;
             default:
                 System.out.println("Invalid choice, please try again.");
@@ -93,7 +93,7 @@ public class UserScreen extends Screen {
         show();  
     }
 
-    private void goBack() {
-        App.redirect(AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN);
-    }
+    // private void goBack() {
+    //     App.redirect(AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN);
+    // }
 }
