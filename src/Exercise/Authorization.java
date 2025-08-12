@@ -10,7 +10,7 @@ public class Authorization {
     private int height;  
     private int weight; 
 
-    boolean getAuthStatus() {
+    boolean getIsAuth() {
         return this.isAuth;
     }
 

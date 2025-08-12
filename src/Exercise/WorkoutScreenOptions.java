@@ -1,6 +1,6 @@
 package Exercise;
 
-enum TOTAL_CALORIES_SCREEN_OPTIONS_ENUM {
+enum WORKOUT_SCREEN_OPTIONS_ENUM {
 	TOTAL("Get for all time"),
 	ENTER_DATES("Enter dates"),
 
@@ -8,7 +8,7 @@ enum TOTAL_CALORIES_SCREEN_OPTIONS_ENUM {
 	
 	private final String value;
 
-	TOTAL_CALORIES_SCREEN_OPTIONS_ENUM(String value) {
+	WORKOUT_SCREEN_OPTIONS_ENUM(String value) {
       this.value = value;
   }
 

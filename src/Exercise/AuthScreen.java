@@ -20,6 +20,7 @@ public class AuthScreen extends Screen {
 	};
 	
 	private void renderOptions() {
+		System.out.println("");
 		for (String key: this.OPTIONS_MAP.keySet()) {
 			if (this.OPTIONS_MAP.get(key) == AUTH_SCREEN_OPTIONS_ENUM.EXIT) {
 				System.out.println("");
@@ -32,16 +33,14 @@ public class AuthScreen extends Screen {
 	private void enterOption() {
 		try {
 			System.out.println("");
-			this.option = sc.nextLine();
+			this.option = this.sc.nextLine();
 
 			if (!this.OPTIONS_MAP.containsKey(this.option)) {
 				throw new RuntimeException("Error! Please enter an option number");
 			}
-			
-			System.out.println("");
 		} catch (Exception e) {
-			sc.nextLine();
 			System.out.println(e.getMessage());
+			this.renderOptions();
 			this.enterOption();
 			return;
 		}
@@ -61,8 +60,8 @@ public class AuthScreen extends Screen {
 
 	@Override
 	public void show() {
-		System.out.println("Auth screen");
 		System.out.println("");
+		System.out.println("Auth screen");
 		
 		this.renderOptions();
 		this.enterOption();

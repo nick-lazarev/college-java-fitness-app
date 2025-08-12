@@ -5,7 +5,6 @@ public class LoginScreen extends Screen {
         try {
             System.out.print("Enter email: ");
             String value = this.sc.nextLine();
-            System.out.println();
             
             if (AppUtils.isValidEmail(value)) {
                 App.authManager.setEmail(value);
@@ -13,7 +12,6 @@ public class LoginScreen extends Screen {
                 throw new RuntimeException("Email is not valid!");
             }
         } catch (Exception e) {
-            sc.nextLine();
             System.out.println(e.getMessage());
             this.enterEmail();  
             return;
@@ -32,7 +30,6 @@ public class LoginScreen extends Screen {
                 throw new RuntimeException("Password is not valid! Password must be at least 6 characters.");
             }
         } catch (Exception e) {
-            sc.nextLine();
             System.out.println(e.getMessage());
             this.enterPassword();  
             return;
@@ -46,6 +43,7 @@ public class LoginScreen extends Screen {
     
     @Override
     public void show() {
+        System.out.println("");
         System.out.println("Login screen");
         System.out.println("");
 

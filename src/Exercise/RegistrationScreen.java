@@ -2,102 +2,40 @@ package Exercise;
 
 public class RegistrationScreen extends Screen {
     private void enterEmail() {
-        try {
-            System.out.print("Enter email: ");
-            String value = this.sc.nextLine();
-            System.out.println();
-            
-            if (AppUtils.isValidEmail(value)) {
-                App.authManager.setEmail(value);    
-            } else {
-                throw new RuntimeException("Email is not valid!");
-            }
-        } catch (Exception e) {
-            sc.nextLine();
-            System.out.println(e.getMessage());
-            this.enterEmail();
-            return;
-        }
+        App.authManager.setEmail(AppUtils.enterEmail());
     }
 
     private void enterPassword() {
-        try {
-            System.out.print("Enter password: ");
-            String value = this.sc.nextLine();
-            System.out.println();
-            
-            if (AppUtils.isValidPassword(value)) {
-                App.authManager.setPassword(value);    
-            } else {
-                throw new RuntimeException("Password is not valid! Password must be at least 6 characters.");
-            }
-        } catch (Exception e) {
-            sc.nextLine();
-            System.out.println(e.getMessage());
-            this.enterPassword();
-            return;
-        }
+        App.authManager.setPassword(AppUtils.enterPassword());
     }
 
     private void enterName() {
-        System.out.print("Enter name: ");
-        String value = this.sc.nextLine();
-        System.out.println();
-        App.authManager.setName(value);
+        try {
+            System.out.println();
+            System.out.print("Enter name: ");
+            String name = this.sc.nextLine().trim();
+
+            if (name.isEmpty()) {
+                throw new RuntimeException("Name is not valid!");
+            } 
+
+            App.authManager.setName(name);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            this.enterName();
+        }
     }
 
     private void enterAge() {
-        try {
-            System.out.print("Enter age: ");
-            
-            if (!this.sc.hasNextInt()) {
-                throw new RuntimeException("Error! Please enter a positive number");
-            }
-            int value = this.sc.nextInt();
-            System.out.println();
-            App.authManager.setAge(value);  
-        } catch (Exception e) {
-            sc.nextLine();
-            System.out.println(e.getMessage());
-            this.enterAge();
-            return;
-        }
+        App.authManager.setAge(AppUtils.enterPositiveInt("Enter age: "));
     }
 
     private void enterHeight() {
-        try {
-            System.out.print("Enter height (in cm): ");
-            
-            if (!this.sc.hasNextInt()) {
-                throw new RuntimeException("Error! Please enter a valid number");
-            }
-            int value = this.sc.nextInt();
-            System.out.println();
-            App.authManager.setHeight(value);  
-        } catch (Exception e) {
-            sc.nextLine();
-            System.out.println(e.getMessage());
-            this.enterHeight();
-            return;
-        }
+        App.authManager.setHeight(AppUtils.enterPositiveInt("Enter height (in cm): "));
     }
 
     private void enterWeight() {
-        try {
-            System.out.print("Enter weight (in kg): ");
-            
-            if (!this.sc.hasNextInt()) {
-                throw new RuntimeException("Error! Please enter a valid number");
-            }
-            int value = this.sc.nextInt();
-            System.out.println();
-            App.authManager.setWeight(value);  
-        } catch (Exception e) {
-            sc.nextLine();
-            System.out.println(e.getMessage());
-            this.enterWeight();
-            return;
-        }
+        App.authManager.setWeight(AppUtils.enterPositiveInt("Enter weight (in kg): "));
     }
     
     private void nextAction() {
@@ -107,7 +45,7 @@ public class RegistrationScreen extends Screen {
     
     @Override
     public void show() {
-        //TODO: add error handlers
+        System.out.println("");
         System.out.println("Registration screen");
         System.out.println("");
 

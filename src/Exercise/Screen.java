@@ -3,7 +3,7 @@ package Exercise;
 import java.util.Scanner;
 
 class Screen {
-	Scanner sc = new Scanner(System.in);
+	Scanner sc = AppUtils.sc;
 	
 	void show() {};
 }

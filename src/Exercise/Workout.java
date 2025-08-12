@@ -1,7 +1,6 @@
 package Exercise;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
@@ -12,9 +11,8 @@ import java.util.Locale;
 public class Workout {
     private WORKOUT_TYPES_ENUM workoutType;   // e.g., RUNNING, SQUATS, WEIGHTLIFTING
     private double distance;      // km (used for RUNNING)
-    private int set;              // sets (used for SQUATS/WEIGHTLIFTING)
+    private int setsAmount;              // sets (used for SQUATS/WEIGHTLIFTING)
     private Date date;            // java.util.Date
-    private SimpleDateFormat ISO = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
     // ---- Getters/Setters (UML names) ----
     public WORKOUT_TYPES_ENUM getWorkoutType() {
@@ -32,11 +30,11 @@ public class Workout {
         this.distance = newDistance;
     }
 
-    public int getSets() { return set; }
+    public int getSets() { return setsAmount; }
 
     public void setSets(int newSets) {
         if (newSets < 0) throw new IllegalArgumentException("Sets cannot be negative");
-        this.set = newSets;
+        this.setsAmount = newSets;
     }
 
     public Date getDate() { return date; }
@@ -49,7 +47,7 @@ public class Workout {
     // UML requires setDate(String)
     public void setDate(String newDate) {
         try {
-            this.date = ISO.parse(newDate);
+            this.date = AppUtils.ISO.parse(newDate);
         } catch (ParseException e) {
             throw new IllegalArgumentException("Date must be yyyy-MM-dd", e);
         }
@@ -59,13 +57,13 @@ public class Workout {
     double calcCalories() {
         switch (workoutType) {
             case WORKOUT_TYPES_ENUM.RUNNING:
-                return distance * 60.0;
+                return this.distance * 60.0;
 
             case WORKOUT_TYPES_ENUM.SQUATS:
-                return set * 30.0;
+                return this.setsAmount * 30.0;
 
             case WORKOUT_TYPES_ENUM.WEIGHTLIFTING:
-                return set * 40.0;
+                return this.setsAmount * 40.0;
 
             default:
                 return 0.0;
@@ -74,19 +72,19 @@ public class Workout {
 
     @Override
     public String toString() {
-        String d = (date == null) ? "N/A" : ISO.format(date);
+        String d = (date == null) ? "N/A" : AppUtils.ISO.format(date);
         switch (workoutType) {
             case WORKOUT_TYPES_ENUM.RUNNING:
-                return "RUNNING | " + String.format(Locale.US, "%.2f km", distance) + " | " + d;
+                return "RUNNING | " + String.format(Locale.US, "%.2f km", this.distance) + " | " + d;
 
             case WORKOUT_TYPES_ENUM.SQUATS:
-                return "SQUATS | " + set + " sets | " + d;
+                return "SQUATS | " + this.setsAmount + " sets | " + d;
 
             case WORKOUT_TYPES_ENUM.WEIGHTLIFTING:
-                return "WEIGHTLIFTING | " + set + " sets | " + d;
+                return "WEIGHTLIFTING | " + this.setsAmount + " sets | " + d;
 
             default:
-                return workoutType + " | " + d;
+                return this.workoutType + " | " + d;
         }
     }
 }
