@@ -12,7 +12,23 @@ public class Workout {
     private WORKOUT_TYPES_ENUM workoutType;   // e.g., RUNNING, SQUATS, WEIGHTLIFTING
     private double distance;      // km (used for RUNNING)
     private int setsAmount;              // sets (used for SQUATS/WEIGHTLIFTING)
-    private Date date;            // java.util.Date
+    private Date date;      // java.util.Date
+
+    Workout() {
+
+    }
+
+    Workout(
+        WORKOUT_TYPES_ENUM workoutType,
+        double distance,
+        int setsAmount,
+        Date date
+    ) {
+        this.workoutType = workoutType;
+        this.distance = distance;
+        this.setsAmount = setsAmount;
+        this.date = date;
+    }
 
     // ---- Getters/Setters (UML names) ----
     public WORKOUT_TYPES_ENUM getWorkoutType() {
@@ -78,13 +94,13 @@ public class Workout {
                 return "RUNNING | " + String.format(Locale.US, "%.2f km", this.distance) + " | " + d;
 
             case WORKOUT_TYPES_ENUM.SQUATS:
-                return "SQUATS | " + this.setsAmount + " sets | " + d;
+                return "SQUATS | sets: " + this.setsAmount + " | " + d;
 
             case WORKOUT_TYPES_ENUM.WEIGHTLIFTING:
-                return "WEIGHTLIFTING | " + this.setsAmount + " sets | " + d;
+                return "WEIGHTLIFTING | sets: " + this.setsAmount + " | " + d;
 
             default:
-                return this.workoutType + " | " + d;
+                return "Workout type is absent" + " | " + d;
         }
     }
 }

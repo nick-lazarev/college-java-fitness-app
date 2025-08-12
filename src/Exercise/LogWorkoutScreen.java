@@ -1,7 +1,6 @@
 package Exercise;
 
 import java.util.LinkedHashMap;
-import java.time.LocalDate;
 import java.util.Date;
 
 public class LogWorkoutScreen extends Screen {
@@ -102,8 +101,15 @@ public class LogWorkoutScreen extends Screen {
     this.enterType();
     this.enterAmount();
 
-    App.workoutManager.addWorkout(this.workout);
+    App.workoutManager.addWorkout(
+      new Workout(
+        this.workout.getWorkoutType(),
+        this.workout.getDistance(),
+        this.workout.getSets(),
+        this.workout.getDate()
+      ));
     this.renderNotification();
+    this.workout = new Workout();
 
     App.redirect(AUTH_LOCATIONS_ENUM.MAIN_MENU_SCREEN);
   }
